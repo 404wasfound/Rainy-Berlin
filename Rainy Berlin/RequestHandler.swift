@@ -37,8 +37,8 @@ class RequestHelper {
   }
   
   private func getDataFromServer(url: String, parser: JsonParserProtocol, completed: @escaping ProcessingComplete) {
+    var object: GlobalWeatherProtocol?
     self.fireRequest(url: url) { data in
-      var object: GlobalWeatherProtocol?
       if let data = data {
         object = parser.parse(data: data)
       }
