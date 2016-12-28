@@ -19,43 +19,30 @@ class RequestHelper {
   static let shared = RequestHelper()
   
   func getData(api: API, lat: Double, lon: Double, completed: @escaping ProcessingComplete) {
+    let latValue = LATITUDE + "\(lat)&"
+    let lonValue = LONGITUDE + "\(lon)&"
+    let keyValue = APP_ID + API_KEY
+    var url: String
+    var parser: JsonParserProtocol
+    
     switch api {
     case .weather:
-      self.getWeatherData(lat: lat, lon: lon, completed: completed)
+      url = BASE_URL_WEATHER + latValue + lonValue + keyValue
+      parser = CurrentWeatherParser()
     case .forecast:
-      self.getForecastData(lat: lat, lon: lon, completed: completed)
+      url = BASE_URL_FORECAST + latValue + lonValue + FORECAST_REST + keyValue
+      parser = ForecastParser()
     }
+    self.getDataFromServer(url: url, parser: parser, completed: completed)
   }
   
-  private func getForecastData(lat: Double, lon: Double, completed: @escaping ProcessingComplete) {
-    let latValue = LATITUDE + "\(lat)&"
-    let lonValue = LONGITUDE + "\(lon)&"
-    let keyValue = APP_ID + API_KEY
-    let url = BASE_URL_FORECAST + latValue + lonValue + FORECAST_REST + keyValue
-    
+  private func getDataFromServer(url: String, parser: JsonParserProtocol, completed: @escaping ProcessingComplete) {
     self.fireRequest(url: url) { data in
-      var forecast: GlobalWeatherProtocol?
+      var object: GlobalWeatherProtocol?
       if let data = data {
-        let parser = ForecastParser(data: data)
-        forecast = parser.parse() 
+        object = parser.parse(data: data)
       }
-      completed(forecast)
-    }
-  }
-  
-  private func getWeatherData(lat: Double, lon: Double, completed: @escaping ProcessingComplete) {
-    let latValue = LATITUDE + "\(lat)&"
-    let lonValue = LONGITUDE + "\(lon)&"
-    let keyValue = APP_ID + API_KEY
-    let url = BASE_URL_WEATHER + latValue + lonValue + keyValue
-    
-    self.fireRequest(url: url) { data in
-      var weather: WeatherProtocol?
-      if let data = data {
-        let parser = CurrentWeatherParser(data: data)
-        weather = parser.parse()
-      }
-      completed(weather)
+      completed(object)
     }
   }
   

@@ -9,16 +9,18 @@
 import Foundation
 import SwiftyJSON
 
-class CurrentWeatherParser {
+protocol JsonParserProtocol {
+  var jsonData: JSON { get set }
+  func parse(data: Data) -> GlobalWeatherProtocol?
+}
+
+class CurrentWeatherParser: JsonParserProtocol {
+  var jsonData: JSON = []
   
-  let jsonData: JSON
-  init(data: Data) {
-    self.jsonData = JSON(data: data)
-  }
-  
-  func parse() -> Weather? {
-    if let data = self.parsingWeather(json: self.jsonData) {
-      return data
+  func parse(data: Data) -> GlobalWeatherProtocol? {
+    jsonData = JSON(data: data)
+    if let newData = self.parsingWeather(json: self.jsonData) {
+      return newData
     } else {
       return nil
     }

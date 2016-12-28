@@ -9,16 +9,13 @@
 import Foundation
 import SwiftyJSON
 
-class ForecastParser {
-  
-  let jsonData: JSON
-  init(data: Data) {
-    self.jsonData = JSON(data: data)
-  }
-  
-  func parse() -> WeatherObjectsList? {
-    if let data = parseForecastList(json: self.jsonData) {
-      return data
+class ForecastParser: JsonParserProtocol {
+  var jsonData: JSON = []
+
+  func parse(data: Data) -> GlobalWeatherProtocol? {
+    jsonData = JSON(data: data)
+    if let newData = parseForecastList(json: self.jsonData) {
+      return newData
     } else {
       return nil
     }
@@ -45,9 +42,14 @@ class ForecastParser {
     var lowTemp: Double?
     var highTemp: Double?
     var weatherType: String?
+    var dateDouble: Double?
     
     for (key, value) : (String, JSON) in json {
       switch key {
+        case "dt":
+          if let date = value.double {
+            dateDouble = date
+          }
         case "temp":
           for (key, value) : (String, JSON) in value {
             switch key {
@@ -92,12 +94,19 @@ class ForecastParser {
       }
     }
     
-    if let low = lowTemp, let high = highTemp, let type = weatherType {
-      let forecast = Forecast(weatherType: type, highTemp: high, lowTemp: low)
+    if let low = lowTemp, let high = highTemp, let type = weatherType, let date = dateDouble, self.checkDate(date: date) {
+      let forecast = Forecast(weatherType: type, highTemp: high, lowTemp: low, dateDouble: date)
       return forecast
     }
-    
     return nil
   }
   
+  private func checkDate(date: Double) -> Bool {
+    let currentDate = Date().timeIntervalSince1970
+    if currentDate > date {
+      return false
+    }
+    return true
+  }
+
 }

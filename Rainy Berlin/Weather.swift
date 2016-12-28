@@ -16,6 +16,10 @@ protocol WeatherProtocol: GlobalWeatherProtocol {
   var dateString: String { get }
 }
 
+struct WeatherObjectsList: GlobalWeatherProtocol {
+  let weatherObjects: [WeatherProtocol]
+}
+
 struct Weather: WeatherProtocol {
   let cityName: String
   let weatherType: String

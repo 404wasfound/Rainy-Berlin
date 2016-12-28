@@ -8,23 +8,24 @@
 
 import Foundation
 
-struct WeatherObjectsList: GlobalWeatherProtocol {
-  let weatherObjects: [WeatherProtocol]
-}
-
 struct Forecast: WeatherProtocol {
   let weatherType: String
   let highTemp: Double
   let lowTemp: Double
+  let dateDouble: Double
 }
 
 extension Forecast {
   var dateString: String {
+    let date = Date(timeIntervalSince1970: dateDouble)
     let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .long
-    dateFormatter.timeStyle = .none
+    dateFormatter.dateStyle = .short
     let currentDate = dateFormatter.string(from: Date())
-    let dateString = "Today, \(currentDate)"
-    return dateString
+    let dateToCompare = dateFormatter.string(from: date)
+    if currentDate == dateToCompare {
+      return "Today"
+    }
+    let dateStr = date.dayOfWeek()
+    return dateStr
   }
 }
