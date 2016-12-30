@@ -25,6 +25,9 @@
 		F4BAF20A1E1347ED009623D7 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4BAF2091E1347ED009623D7 /* SplashScreen.storyboard */; };
 		F4BAF20C1E134ABC009623D7 /* SplashScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAF20B1E134ABC009623D7 /* SplashScreenVC.swift */; };
 		F4BAF20E1E135311009623D7 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAF20D1E135311009623D7 /* LocationHandler.swift */; };
+		F4BAF2111E16A947009623D7 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAF2101E16A947009623D7 /* NetworkError.swift */; };
+		F4BAF2151E16B034009623D7 /* CurrentWeatherTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = F4BAF2131E16B034009623D7 /* CurrentWeatherTestData.json */; };
+		F4BAF2161E16B034009623D7 /* ForecastTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = F4BAF2141E16B034009623D7 /* ForecastTestData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		F4BAF2091E1347ED009623D7 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		F4BAF20B1E134ABC009623D7 /* SplashScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenVC.swift; sourceTree = "<group>"; };
 		F4BAF20D1E135311009623D7 /* LocationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
+		F4BAF2101E16A947009623D7 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		F4BAF2131E16B034009623D7 /* CurrentWeatherTestData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CurrentWeatherTestData.json; sourceTree = "<group>"; };
+		F4BAF2141E16B034009623D7 /* ForecastTestData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ForecastTestData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,7 @@
 				F4BAF1FB1E11C5CE009623D7 /* Model */,
 				F4BAF1FF1E11C8A5009623D7 /* View */,
 				F4BAF1FC1E11C62A009623D7 /* Controller */,
+				F4BAF2121E16B00B009623D7 /* Test Data */,
 				F41064D91DF78332007E5F01 /* AppDelegate.swift */,
 				F41064DD1DF78332007E5F01 /* WeatherScreen.storyboard */,
 				F4BAF2091E1347ED009623D7 /* SplashScreen.storyboard */,
@@ -124,6 +131,7 @@
 			children = (
 				F41064ED1DFC4110007E5F01 /* Weather.swift */,
 				F4BAF1F91E11C108009623D7 /* Forecast.swift */,
+				F4BAF2101E16A947009623D7 /* NetworkError.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -162,6 +170,15 @@
 				F4BAF20D1E135311009623D7 /* LocationHandler.swift */,
 			);
 			name = Singletons;
+			sourceTree = "<group>";
+		};
+		F4BAF2121E16B00B009623D7 /* Test Data */ = {
+			isa = PBXGroup;
+			children = (
+				F4BAF2131E16B034009623D7 /* CurrentWeatherTestData.json */,
+				F4BAF2141E16B034009623D7 /* ForecastTestData.json */,
+			);
+			name = "Test Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +248,8 @@
 				F4BAF20A1E1347ED009623D7 /* SplashScreen.storyboard in Resources */,
 				F41064E11DF78332007E5F01 /* Assets.xcassets in Resources */,
 				F41064DF1DF78332007E5F01 /* WeatherScreen.storyboard in Resources */,
+				F4BAF2161E16B034009623D7 /* ForecastTestData.json in Resources */,
+				F4BAF2151E16B034009623D7 /* CurrentWeatherTestData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +320,7 @@
 				F4BAF1F81E11BF28009623D7 /* CurrentWeatherParser.swift in Sources */,
 				F41064DA1DF78332007E5F01 /* AppDelegate.swift in Sources */,
 				F4BAF2081E132C9E009623D7 /* Extensions.swift in Sources */,
+				F4BAF2111E16A947009623D7 /* NetworkError.swift in Sources */,
 				F41064EC1DFC3EAD007E5F01 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

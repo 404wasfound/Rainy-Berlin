@@ -17,4 +17,4 @@ let APP_ID = "appid="
 let API_KEY = "31835cf6c23349b1a7689cf63945d341"
 
 typealias ProcessingComplete = (_ weather: GlobalWeatherProtocol?) -> ()
-typealias DownloadComplete = (_ data: Data?) -> ()
+typealias DownloadComplete = (_ data: Data?, _ error: NetworkError?) -> ()

@@ -38,7 +38,12 @@ class RequestHelper {
   
   private func getDataFromServer(url: String, parser: JsonParserProtocol, completed: @escaping ProcessingComplete) {
     var object: GlobalWeatherProtocol?
-    self.fireRequest(url: url) { data in
+    self.fireRequest(url: url) { data, error in
+      if let newError = error, newError.shouldUseFakeData {
+        if let testData = self.loadTestData(url: url) {
+          object = parser.parse(data: testData)
+        }
+      }
       if let data = data {
         object = parser.parse(data: data)
       }
@@ -49,12 +54,30 @@ class RequestHelper {
   private func fireRequest(url: String, completed: @escaping DownloadComplete) {
     var data: Data?
     Alamofire.request(url).responseJSON { response in
+      guard let _ = response.response else {
+        print("NO RESPONSE, PROBABLY INTERNET CONNECTION ERROR")
+        let error = NetworkError(type: .connectionProblem, shouldUseFakeData: true)
+        completed(nil, error)
+        return
+      }
       if let responseData = response.data {
         print("JSON: \(response.result.value)")
         data = responseData
       }
-      completed(data)
+      completed(data, nil)
     }
+  }
+  
+  func loadTestData(url: String) -> Data? {
+    let manager = FileManager()
+    let path = Bundle.main.bundlePath
+    var data: Data?
+    if url.contains(BASE_URL_WEATHER) {
+      data = manager.contents(atPath: path.appending("/CurrentWeatherTestData.json"))
+    } else if url.contains(BASE_URL_FORECAST) {
+      data = manager.contents(atPath: path.appending("/ForecastTestData.json"))
+    }
+    return data
   }
   
 }

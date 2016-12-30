@@ -12,6 +12,7 @@ class LocationHandler {
   
   static let shared = LocationHandler()
   
+  var useUserLocation: Bool = false
   var latitude: Double?
   var longitude: Double?
   
