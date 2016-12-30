@@ -24,11 +24,14 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   }
   
   func getCurrentWeatherData() {
-//    guard let lat = LocationHandler.shared.latitude, let lon = LocationHandler.shared.longitude else {
-//      return
-//    }
-    let lat = 50.00
-    let lon = 39.00
+    var lat = 50.00
+    var lon = 39.00
+    if let latUser = LocationHandler.shared.latitude, let lonUser = LocationHandler.shared.longitude,
+      LocationHandler.shared.useUserLocation {
+      lat = latUser
+      lon = lonUser
+    }
+
     RequestHelper.shared.getData(api: .weather, lat: lat, lon: lon) { object in
       if let weather = object as? Weather {
         self.currentWeatherView.updateUI(weather: weather)
@@ -37,11 +40,13 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   }
   
   func getForecastData() {
-//    guard let lat = LocationHandler.shared.latitude, let lon = LocationHandler.shared.longitude else {
-//      return
-//    }
-    let lat = 50.00
-    let lon = 39.00
+    var lat = 50.00
+    var lon = 39.00
+    if let latUser = LocationHandler.shared.latitude, let lonUser = LocationHandler.shared.longitude, LocationHandler.shared.useUserLocation {
+      lat = latUser
+      lon = lonUser
+    }
+    
     RequestHelper.shared.getData(api: .forecast, lat: lat, lon: lon) { object in
       if let weatherObject = object as? WeatherObjectsList, let forecastsList = weatherObject.weatherObjects as? [Forecast] {
         self.forecasts = forecastsList
