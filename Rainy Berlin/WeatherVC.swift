@@ -76,6 +76,10 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     cell.configureCell(forecast: self.forecasts[indexPath.row])
     return cell
   }
+  
+  @IBAction func unwindToRoot(segue: UIStoryboardSegue) {
+    //RELOAD THE DATA FOR PREVIOUS LOCATION
+  }
 
 }
 
