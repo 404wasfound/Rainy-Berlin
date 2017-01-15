@@ -9,7 +9,7 @@
 import UIKit
 
 protocol GlobalWeatherProtocol {
-  //placeholder protocol
+  //placeholder protocol used for bouding parsed objects
 }
 
 protocol WeatherProtocol: GlobalWeatherProtocol {

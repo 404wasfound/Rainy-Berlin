@@ -27,10 +27,10 @@ class RequestHelper {
     
     switch api {
     case .weather:
-      url = BASE_URL_WEATHER + latValue + lonValue + keyValue
+      url = BASE_URL_WEATHER + latValue + lonValue + UNIT_VALUE + keyValue
       parser = CurrentWeatherParser()
     case .forecast:
-      url = BASE_URL_FORECAST + latValue + lonValue + FORECAST_REST + keyValue
+      url = BASE_URL_FORECAST + latValue + lonValue + UNIT_VALUE + FORECAST_REST + keyValue
       parser = ForecastParser()
     }
     self.getDataFromServer(url: url, parser: parser, completed: completed)

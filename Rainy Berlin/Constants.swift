@@ -15,6 +15,6 @@ let LATITUDE = "lat="
 let LONGITUDE = "lon="
 let APP_ID = "appid="
 let API_KEY = "31835cf6c23349b1a7689cf63945d341"
-
+let UNIT_VALUE = "units=metric&"
 typealias ProcessingComplete = (_ weather: GlobalWeatherProtocol?) -> ()
 typealias DownloadComplete = (_ data: Data?, _ error: NetworkError?) -> ()

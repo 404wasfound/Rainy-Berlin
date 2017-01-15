@@ -29,7 +29,7 @@ class SplashScreenVC: UIViewController, CLLocationManagerDelegate {
         LocationHandler.shared.latitude = currentLocation.coordinate.latitude
         LocationHandler.shared.longitude = currentLocation.coordinate.longitude
       } else {
-        print("NO RESPONSE, PROBABLY INTERNET CONNECTION ERROR")
+        print("THERE IS NO LOCATION. FAKING THE DATA...")
       }
       performSegue(withIdentifier: "showWeatherVC", sender: self)
     } else if status == .denied {
