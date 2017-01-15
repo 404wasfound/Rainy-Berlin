@@ -19,20 +19,32 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     self.tableView.delegate = self
     self.tableView.dataSource = self
-    self.getCurrentWeatherData()
-    self.getForecastData()
   }
   
-  func getCurrentWeatherData() {
+  override func viewWillAppear(_ animated: Bool) {
+    self.getWeatherForecastData()
+  }
+  
+  func getWeatherForecastData() {
     var lat = 50.00
     var lon = 39.00
-//    var lat = 52.5243700 //Berlin
-//    var lon = 13.4105300 //Berlin
+    //    var lat = 52.5243700 //Berlin
+    //    var lon = 13.4105300 //Berlin
     if LocationHandler.shared.useUserLocation, let currentUserLocation = LocationHandler.shared.currentUserLocation {
       lat = currentUserLocation.latitude
       lon = currentUserLocation.longitude
     }
-
+    
+    if let selectedLocation = ApplicationData.shared.selectedLocation {
+      lat = selectedLocation.latitude
+      lon = selectedLocation.longitude
+    }
+    
+    self.getCurrentWeatherData(lat: lat, lon: lon)
+    self.getForecastData(lat: lat, lon: lon)
+  }
+  
+  func getCurrentWeatherData(lat: Double, lon: Double) {
     RequestHelper.shared.getData(api: .weather, lat: lat, lon: lon) { object in
       if let weather = object as? Weather {
         LocationHandler.shared.addNewLocation(location: weather.location)
@@ -41,16 +53,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
   }
   
-  func getForecastData() {
-    var lat = 50.00
-    var lon = 39.00
-//    var lat = 52.5243700 //Berlin Mitte
-//    var lon = 13.4105300 //Berlin Mitte
-    if LocationHandler.shared.useUserLocation, let currentUserLocation = LocationHandler.shared.currentUserLocation {
-      lat = currentUserLocation.latitude
-      lon = currentUserLocation.longitude
-    }
-    
+  func getForecastData(lat: Double, lon: Double) {
     RequestHelper.shared.getData(api: .forecast, lat: lat, lon: lon) { object in
       if let weatherObject = object as? WeatherObjectsList, let forecastsList = weatherObject.weatherObjects as? [Forecast] {
         self.forecasts = forecastsList

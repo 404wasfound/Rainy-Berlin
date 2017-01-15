@@ -24,7 +24,6 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     if let savedLocations = ApplicationData.shared.favoriteLocations {
       self.locations = savedLocations
     }
-    
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -35,16 +34,18 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     return cell
   }
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    ApplicationData.shared.selectedLocation = self.locations[indexPath.row]
+    self.performSegue(withIdentifier: "unwindToRoot", sender: nil)
+    
+  }
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.locations.count
-  }
-  
-  override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-    // something happens
   }
   
 }

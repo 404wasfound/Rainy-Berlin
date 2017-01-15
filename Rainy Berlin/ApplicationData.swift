@@ -12,5 +12,5 @@ class ApplicationData {
   
   static var shared = ApplicationData()
   var favoriteLocations: [Location]?
-
+  var selectedLocation: Location?
 }

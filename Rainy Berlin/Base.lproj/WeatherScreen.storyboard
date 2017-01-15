@@ -258,10 +258,10 @@
                                 <color key="barTintColor" red="0.31764705882352939" green="0.64313725490196072" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Search For City" id="gTS-Vh-2bm">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="cpO-94-xFQ">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="cpO-94-xFQ">
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <segue destination="7ZS-Lq-ENQ" kind="unwind" unwindAction="unwindToRootWithSegue:" id="85i-CG-XuT"/>
+                                                <segue destination="7ZS-Lq-ENQ" kind="unwind" identifier="unwindToRoot" unwindAction="unwindToRootWithSegue:" id="85i-CG-XuT"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

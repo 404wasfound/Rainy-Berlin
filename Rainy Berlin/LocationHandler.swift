@@ -16,6 +16,13 @@ class LocationHandler {
   var currentUserLocation: Location?
   
   func addNewLocation(location: Location) {
+    if let selectedLocation = ApplicationData.shared.selectedLocation {
+      if selectedLocation != location {
+        ApplicationData.shared.selectedLocation = location
+      }
+    } else {
+      ApplicationData.shared.selectedLocation = location
+    }
     if let locations = ApplicationData.shared.favoriteLocations {
       let locationAlreadySaved = locations.contains(where: {
         if $0 == location {
