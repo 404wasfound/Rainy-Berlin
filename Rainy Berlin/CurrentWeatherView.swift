@@ -23,5 +23,4 @@ class CurrentWeatherView: UIView {
     self.weatherLabel.text = weather.weatherType
     self.weatherImage.image = UIImage(named: weather.weatherType)
   }
-  
 }

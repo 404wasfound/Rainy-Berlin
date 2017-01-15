@@ -40,6 +40,15 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
   }
   
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      self.locations.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .fade)
+      ApplicationData.shared.favoriteLocations = self.locations
+      LocationHandler.shared.saveLocations()
+    }
+  }
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
