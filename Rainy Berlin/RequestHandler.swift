@@ -61,6 +61,7 @@ class RequestHelper {
         return
       }
       if let responseData = response.data {
+        print("Response from " + url)
         print("JSON: \(response.result.value)")
         data = responseData
       }

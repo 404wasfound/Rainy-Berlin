@@ -29,13 +29,15 @@ class Location: NSObject, NSCoding {
   required init?(coder aDecoder: NSCoder) {
     self.name = aDecoder.decodeObject(forKey: "locationName") as! String
     self.latitude = aDecoder.decodeDouble(forKey: "locationLatitude")
-    self.longitude = aDecoder.decodeDouble(forKey: "locationLatitude")
+    self.longitude = aDecoder.decodeDouble(forKey: "locationLongitude")
   }
   
-}
-
-extension Location {
-  static func == (lhs: Location, rhs: Location) -> Bool {
-    return  lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+  static func ==(lhs: Location, rhs: Location) -> Bool {
+    if lhs.name == rhs.name, lhs.latitude == rhs.latitude, lhs.longitude == rhs.longitude {
+      return true
+    } else {
+      return false
+    }
   }
+  
 }

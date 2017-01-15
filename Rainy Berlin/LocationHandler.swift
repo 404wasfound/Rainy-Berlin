@@ -17,7 +17,14 @@ class LocationHandler {
   
   func addNewLocation(location: Location) {
     if let locations = ApplicationData.shared.favoriteLocations {
-      if locations.contains(location) {
+      let locationAlreadySaved = locations.contains(where: {
+        if $0 == location {
+          return true
+        } else {
+          return false
+        }
+      })
+      if locationAlreadySaved {
         print("Location is already saved")
         return
       } else {

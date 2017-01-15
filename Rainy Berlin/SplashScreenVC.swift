@@ -31,7 +31,7 @@ class SplashScreenVC: UIViewController, CLLocationManagerDelegate {
         LocationHandler.shared.useUserLocation = true
         LocationHandler.shared.currentUserLocation = Location(name: "Current Location", latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
       } else {
-        print("THERE IS NO LOCATION. FAKING THE DATA...")
+        print("THERE IS NO USER LOCATION. FAKING THE DATA...")
       }
       performSegue(withIdentifier: "showWeatherVC", sender: self)
     } else if status == .denied {

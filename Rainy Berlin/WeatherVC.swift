@@ -26,6 +26,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   func getCurrentWeatherData() {
     var lat = 50.00
     var lon = 39.00
+//    var lat = 52.5243700 //Berlin
+//    var lon = 13.4105300 //Berlin
     if LocationHandler.shared.useUserLocation, let currentUserLocation = LocationHandler.shared.currentUserLocation {
       lat = currentUserLocation.latitude
       lon = currentUserLocation.longitude
@@ -42,6 +44,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   func getForecastData() {
     var lat = 50.00
     var lon = 39.00
+//    var lat = 52.5243700 //Berlin Mitte
+//    var lon = 13.4105300 //Berlin Mitte
     if LocationHandler.shared.useUserLocation, let currentUserLocation = LocationHandler.shared.currentUserLocation {
       lat = currentUserLocation.latitude
       lon = currentUserLocation.longitude
