@@ -19,7 +19,7 @@ class CurrentWeatherView: UIView {
   func updateUI(weather: Weather) {
     self.dateLabel.text = weather.dateString
     self.temperatureLabel.text = "\(weather.currentTemperature)°"
-    self.locationLabel.text = weather.cityName
+    self.locationLabel.text = weather.location.name
     self.weatherLabel.text = weather.weatherType
     self.weatherImage.image = UIImage(named: weather.weatherType)
   }

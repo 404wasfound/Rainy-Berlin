@@ -21,7 +21,7 @@ struct WeatherObjectsList: GlobalWeatherProtocol {
 }
 
 struct Weather: WeatherProtocol {
-  let cityName: String
+  let location: Location
   let weatherType: String
   let currentTemperature: Double
 }

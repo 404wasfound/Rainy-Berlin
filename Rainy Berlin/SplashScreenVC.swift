@@ -16,6 +16,9 @@ class SplashScreenVC: UIViewController, CLLocationManagerDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    LocationHandler.shared.readLocations()
+    
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.requestWhenInUseAuthorization()
@@ -26,8 +29,7 @@ class SplashScreenVC: UIViewController, CLLocationManagerDelegate {
     if status == .authorizedWhenInUse {
       if let currentLocation = manager.location {
         LocationHandler.shared.useUserLocation = true
-        LocationHandler.shared.latitude = currentLocation.coordinate.latitude
-        LocationHandler.shared.longitude = currentLocation.coordinate.longitude
+        LocationHandler.shared.currentUserLocation = Location(name: "Current Location", latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
       } else {
         print("THERE IS NO LOCATION. FAKING THE DATA...")
       }

@@ -13,6 +13,7 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
   @IBOutlet private weak var searchBar: UISearchBar!
   @IBOutlet private weak var tableView: UITableView!
   
+  var locations: [Location] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,10 +21,18 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     self.tableView.delegate = self
     self.tableView.dataSource = self
     
+    if let savedLocations = ApplicationData.shared.favoriteLocations {
+      self.locations = savedLocations
+    }
+    
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return UITableViewCell()
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCityCell") as? SearchCityCell else {
+      return UITableViewCell()
+    }
+    cell.configureCell(location: self.locations[indexPath.row])
+    return cell
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -31,8 +40,7 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
-    return 1
+    return self.locations.count
   }
   
   override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {

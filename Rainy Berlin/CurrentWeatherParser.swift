@@ -30,6 +30,8 @@ class CurrentWeatherParser: JsonParserProtocol {
     var currentTemperature: Double?
     var locationName: String?
     var weatherType: String?
+    var lat: Double?
+    var lon: Double?
     
     for (key, value) : (String, JSON) in json {
       switch key {
@@ -54,6 +56,16 @@ class CurrentWeatherParser: JsonParserProtocol {
         if let name = value.string {
           locationName = name
         }
+      case "coord":
+        for (key, value) : (String, JSON) in value {
+          switch key {
+            case "lat":
+              lat = value.double
+            case "lon":
+              lon = value.double
+          default: ()
+          }
+        }
       case "weather":
         if let weatherArray = value.array {
           if let newValue = weatherArray.first {
@@ -71,8 +83,9 @@ class CurrentWeatherParser: JsonParserProtocol {
       default: ()
       }
     }
-    if let temp = currentTemperature, let name = locationName, let weather = weatherType {
-      let weather = Weather(cityName: name, weatherType: weather, currentTemperature: temp)
+    if let temp = currentTemperature, let name = locationName, let weather = weatherType, let locationLat = lat, let locationLon = lon {
+      let location = Location(name: name, latitude: locationLat, longitude: locationLon)
+      let weather = Weather(location: location, weatherType: weather, currentTemperature: temp)
       return weather
     }
     
