@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
   @IBOutlet private weak var searchBar: UISearchBar!
   @IBOutlet private weak var tableView: UITableView!
@@ -20,9 +20,19 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     self.tableView.delegate = self
     self.tableView.dataSource = self
+    self.searchBar.delegate = self
     
     if let savedLocations = ApplicationData.shared.favoriteLocations {
       self.locations = savedLocations
+    }
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    if let searchText = searchBar.text {
+      if !searchText.isEmpty {
+        let searchString = searchText.replacingOccurrences(of: " ", with: "")
+        self.getCurrentWeatherDataForCity(name: searchString)
+      }
     }
   }
   
@@ -37,7 +47,6 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     ApplicationData.shared.selectedLocation = self.locations[indexPath.row]
     self.performSegue(withIdentifier: "unwindToRoot", sender: nil)
-    
   }
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -55,6 +64,16 @@ class SearchCityVC: UIViewController, UITableViewDelegate, UITableViewDataSource
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.locations.count
+  }
+  
+  func getCurrentWeatherDataForCity(name: String) {
+    RequestHelper.shared.getDataForCity(api: .weather, cityName: name) { object in
+      if let weather = object as? Weather {
+        LocationHandler.shared.addNewLocation(location: weather.location)
+        ApplicationData.shared.selectedLocation = weather.location
+        self.performSegue(withIdentifier: "unwindToRoot", sender: nil)
+      }
+    }
   }
   
 }

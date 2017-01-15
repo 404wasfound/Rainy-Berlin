@@ -36,6 +36,23 @@ class RequestHelper {
     self.getDataFromServer(url: url, parser: parser, completed: completed)
   }
   
+  func getDataForCity(api: API, cityName: String, completed: @escaping ProcessingComplete) {
+    let paramUrl = cityName + "&" + UNIT_VALUE
+    let keyValue = APP_ID + API_KEY
+    var url: String
+    var parser: JsonParserProtocol
+    
+    switch api {
+    case .weather:
+      url = BASE_URL_CITY_NAME_WEATHER + paramUrl + keyValue
+      parser = CurrentWeatherParser()
+    case .forecast:
+      url = BASE_URL_CITY_NAME_FORECAST + paramUrl + keyValue
+      parser = ForecastParser()
+    }
+    self.getDataFromServer(url: url, parser: parser, completed: completed)
+  }
+  
   private func getDataFromServer(url: String, parser: JsonParserProtocol, completed: @escaping ProcessingComplete) {
     var object: GlobalWeatherProtocol?
     self.fireRequest(url: url) { data, error in

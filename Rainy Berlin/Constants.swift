@@ -10,6 +10,8 @@ import Foundation
 
 let BASE_URL_WEATHER = "http://api.openweathermap.org/data/2.5/weather?"
 let BASE_URL_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?"
+let BASE_URL_CITY_NAME_WEATHER = "http://api.openweathermap.org/data/2.5/weather?q="
+let BASE_URL_CITY_NAME_FORECAST = "http://api.openweathermap.org/data/2.5/forecast?q="
 let FORECAST_REST = "cnt=8&mode=json&"
 let LATITUDE = "lat="
 let LONGITUDE = "lon="

@@ -33,7 +33,7 @@ class Location: NSObject, NSCoding {
   }
   
   static func ==(lhs: Location, rhs: Location) -> Bool {
-    if lhs.name == rhs.name, lhs.latitude == rhs.latitude, lhs.longitude == rhs.longitude {
+    if lhs.latitude == rhs.latitude, lhs.longitude == rhs.longitude {
       return true
     } else {
       return false

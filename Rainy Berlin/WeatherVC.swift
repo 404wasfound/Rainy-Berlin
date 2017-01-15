@@ -13,6 +13,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var currentWeatherView: CurrentWeatherView!
   var forecasts = [Forecast]()
+  var cityName: String?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,26 +27,22 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
   }
   
   func getWeatherForecastData() {
-    var lat = 50.00
-    var lon = 39.00
-    //    var lat = 52.5243700 //Berlin
-    //    var lon = 13.4105300 //Berlin
+    var tempLocationRU = Location(name: "Temporary Location RU", latitude: 50.00, longitude: 39.00)
+//    var tempLocationBerlin = Location(name: "Temporary Location Berlin", latitude: 52.5243700, longitude: 13.4105300)
     if LocationHandler.shared.useUserLocation, let currentUserLocation = LocationHandler.shared.currentUserLocation {
-      lat = currentUserLocation.latitude
-      lon = currentUserLocation.longitude
+      tempLocationRU = currentUserLocation
     }
     
     if let selectedLocation = ApplicationData.shared.selectedLocation {
-      lat = selectedLocation.latitude
-      lon = selectedLocation.longitude
+      tempLocationRU = selectedLocation
     }
     
-    self.getCurrentWeatherData(lat: lat, lon: lon)
-    self.getForecastData(lat: lat, lon: lon)
+    self.getCurrentWeatherData(location: tempLocationRU)
+    self.getForecastData(location: tempLocationRU)
   }
   
-  func getCurrentWeatherData(lat: Double, lon: Double) {
-    RequestHelper.shared.getData(api: .weather, lat: lat, lon: lon) { object in
+  func getCurrentWeatherData(location: Location) {
+    RequestHelper.shared.getData(api: .weather, lat: location.latitude, lon: location.longitude) { object in
       if let weather = object as? Weather {
         LocationHandler.shared.addNewLocation(location: weather.location)
         self.currentWeatherView.updateUI(weather: weather)
@@ -53,8 +50,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
   }
   
-  func getForecastData(lat: Double, lon: Double) {
-    RequestHelper.shared.getData(api: .forecast, lat: lat, lon: lon) { object in
+  func getForecastData(location: Location) {
+    RequestHelper.shared.getData(api: .forecast, lat: location.latitude, lon: location.longitude) { object in
       if let weatherObject = object as? WeatherObjectsList, let forecastsList = weatherObject.weatherObjects as? [Forecast] {
         self.forecasts = forecastsList
         self.tableView.reloadData()
